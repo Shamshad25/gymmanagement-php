@@ -19,6 +19,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('trainer', [trainerController::class, 'index']);
+Route::get('trainer', [trainerController::class, 'index'])->name('trainer');
 
-Route::get('member', [memberController::class, 'show']);
+Route::post('trainer', [trainerController::class, 'store']);
+
+Route::post('trainer/{id}', [trainerController::class, 'destroy'])->name('trainer.destroy');
+
+Route::get('member', [memberController::class, 'index']);
+
+Route::post('member/{id}', [memberController::class, 'destroy'])->name('member.destroy');
+
+Route::post('member', [memberController::class, 'store']);

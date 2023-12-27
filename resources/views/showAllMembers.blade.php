@@ -14,7 +14,7 @@
 <div class="jumbotron text-center">
   <h1>Super Gym</h1>
   <div class="float-right mr-4">
-    <a href="" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add New Trainer</a>
+    <a href="" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add New Member</a>
   </div>
 </div>
 
@@ -32,21 +32,23 @@
                 <thead>
                     <tr>
                         <td>Id</td>
-                        <td>Training Name</td>
-                        <td>Trainer Batch</td>
+                        <td>Member_Name</td>
+                        <td>Member_Phone</td>
+                        <td>Trainer_id</td>
                         <td>Edit</td>
                         <td>Delete</td>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($trainer as $person)
+                    @foreach ($member as $person)
                     <tr>
                         <td>{{$person->id}}</td>
-                        <td>{{$person->Trainer_Name}}</td>
-                        <td>{{$person->Trainer_Batch}}</td>
+                        <td>{{$person->Member_Name}}</td>
+                        <td>{{$person->Member_Phone}}</td>
+                        <td>{{$person->Trainer_id}}</td>
                         <td><a href="javascript:void(0)" class="btn btn-warning editBtn">Edit</a></td>
                         <td>
-                            <form action="{{ route('trainer.destroy',$person->id)}}" method="POST">
+                            <form action="{{ route('member.destroy',$person->id)}}" method="POST">
                                 @csrf
                             <input type="submit" value="Delete" class="btn btn-danger" />
                             </form>
@@ -66,22 +68,27 @@
 
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">Trainer</h4>
+          <h4 class="modal-title">Member</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
 
         <!-- Modal body -->
         <div class="modal-body">
-          <form action="{{ url('trainer')}}" method="POST">
+          <form action="{{ url('member')}}" method="POST">
             @csrf
             <div class="form-group">
-                <label for="">Trainer Name</label>
-                <input type="text" id="Trainer_Name" name="Trainer_Name" class="form-control">
+                <label for="">Member Name</label>
+                <input type="text" id="Member_Name" name="Member_Name" class="form-control">
             </div>
 
             <div class="form-group">
-                <label for="">Trainer Batch</label>
-                <input type="text" id="Trainer_Batch" name="Trainer_Batch" class="form-control">
+                <label for="">Phone Number</label>
+                <input type="text" id="Member_Phone" name="Member_Phone" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="">Trainer Id</label>
+                <input type="text" id="Trainer_id" name="Trainer_id" class="form-control">
             </div>
 
             <button type="submit" class="btn btn-success">Submit</button>

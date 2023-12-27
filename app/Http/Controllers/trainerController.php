@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\trainerModel;
+use Illuminate\Http\Request;
 
 class trainerController extends Controller
 {
@@ -29,7 +29,11 @@ class trainerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $trainerObj = new trainerModel;
+        $trainerObj->Trainer_Name = $request->Trainer_Name;
+        $trainerObj->Trainer_Batch = $request->Trainer_Batch;
+        $trainerObj->Save();
+        return redirect()->route('trainer');
     }
 
     /**
@@ -53,7 +57,11 @@ class trainerController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $trainerObj = trainerModel::find($id);
+        $trainerObj->Trainer_Name = $request->Trainer_Name;
+        $trainerObj->Trainer_Batch = $request->Trainer_Batch;
+        $trainerObj->Save();
+        return redirect('trainer');
     }
 
     /**
@@ -61,6 +69,8 @@ class trainerController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $trainerToDelete = trainerModel::find($id);
+        $trainerToDelete->delete();
+        return redirect()->route('trainer');
     }
 }
