@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\memberModel;
+use App\Models\trainerModel;
 use Illuminate\Http\Request;
 
 class memberController extends Controller
@@ -13,7 +14,9 @@ class memberController extends Controller
     public function index()
     {
         $member = memberModel::all();
-        return view('showAllMembers')->with('member',$member);
+        $trainer = trainerModel::all();
+
+        return view('showAllMembers')->with('member',$member)->with('trainer',$trainer);
     }
 
     /**
@@ -58,7 +61,12 @@ class memberController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $memberObj = memberModel::find($id);
+        $memberObj->Member_Name = $request->Member_Name;
+        $memberObj->Member_Phone = $request->Member_Phone;
+        $memberObj->Trainer_id = $request->Trainer_id;
+        $memberObj->Save();
+        return redirect('member');
     }
 
     /**

@@ -35,6 +35,7 @@
                         <td>Member_Name</td>
                         <td>Member_Phone</td>
                         <td>Trainer_id</td>
+                        <td>Trainer_Batch</td>
                         <td>Edit</td>
                         <td>Delete</td>
                     </tr>
@@ -45,7 +46,8 @@
                         <td>{{$person->id}}</td>
                         <td>{{$person->Member_Name}}</td>
                         <td>{{$person->Member_Phone}}</td>
-                        <td>{{$person->Trainer_id}}</td>
+                        <td>{{$person->myTrainer->Trainer_Name}}</td>
+                        <td>{{$person->myTrainer->Trainer_Batch}}<input type="hidden" value="" /></td>
                         <td><a href="javascript:void(0)" class="btn btn-warning editBtn">Edit</a></td>
                         <td>
                             <form action="{{ route('member.destroy',$person->id)}}" method="POST">
@@ -88,7 +90,13 @@
 
             <div class="form-group">
                 <label for="">Trainer Id</label>
-                <input type="text" id="Trainer_id" name="Trainer_id" class="form-control">
+                {{-- <input type="text" id="Trainer_id" name="Trainer_id" class="form-control"> --}}
+                <select id="Trainer_id" name="Trainer_id" class="form-control">
+                    <option value="" selected disabled>Select Trainer</option>
+                    @foreach ($trainer as $train)
+                        <option value="{{$train->id}}">{{$train->Trainer_Name}}</option>
+                    @endforeach
+                </select>
             </div>
 
             <button type="submit" class="btn btn-success">Submit</button>
@@ -102,14 +110,17 @@
   <script>
     $('.editBtn').click(function(e){
 
-      batch = e.target.parentElement.previousElementSibling.innerText;
-      name = e.target.parentElement.previousElementSibling.previousElementSibling.innerText;
-      id = e.target.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.innerText;
-      console.log(name+ batch + id);
+        Trainer_id = e.target.parentElement.previousElementSibling.querySelector("input[type='hidden']");\
 
-      $('#Trainer_Name').val(name);
-      $('#Trainer_Batch').val(batch);
-      $('#form').attr('action','trainer/'+id);
+        Member_Name = e.target.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.innerText;
+        Member_Phone = e.target.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.innerText;
+        id = e.target.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.innerText;
+
+      $('#Member_Name').val(Member_Name);
+      $('#Member_Phone').val(Member_Phone);
+      $('#Trainer_id').val(Trainer_id);
+
+      $('#form').attr('action','member/'+id);
       $('#form').append("<input type='hidden' name='_method' value='PUT'/>");
 
       $('#myModal').modal('show');
